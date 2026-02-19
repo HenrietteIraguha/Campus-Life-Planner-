@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Validator Tests</title>
+</head>
+<body>
+    <h1>Validator Tests (Open Console)</h1>
+
+    <script type="module">
+        import {
+            validateTitle,
+            validateDuration,
+            validateDate,
+            validateTag,
+            compileRegex
+        } from './scripts/validators.js';
+
+
+        function test(name, result) {
+            if (result) {
+                console.log(`✅ PASS: ${name}`);
+            } else {
+                console.error(`❌ FAIL: ${name}`);
+            }
+        }
+
+
+        //test title
+
+        test("Valid title",
+            validateTitle("Study Math").valid === true
+        );
+
+        test("Reject leading space",
+            validateTitle(" Study Math").valid === false
+        );
+
+        test("Reject double spaces",
+            validateTitle("Study  Math").valid === false
+        );
+
+        test("Reject duplicate words",
+            validateTitle("exam exam").valid === false
+        );
+
+        test("Reject empty title",
+            validateTitle("").valid === false
+        );
+
+
+        // duration test
+        test("Valid duration",
+            validateDuration("45").valid === true
+        );
+
+        test("Reject zero",
+            validateDuration("0").valid === false
+        );
+
+        test("Reject leading zero",
+            validateDuration("005").valid === false
+        );
+
+        test("Reject decimal",
+            validateDuration("10.5").valid === false
+        );
+
+        test("Reject negative",
+            validateDuration("-5").valid === false
+        );
+
+
+        // date test
+        test("Valid date",
+            validateDate("2026-02-15").valid === true
+        );
+
+        test("Reject invalid month",
+            validateDate("2026-13-10").valid === false
+        );
+
+        test("Reject invalid day",
+            validateDate("2026-02-30").valid === false
+        );
+
+        test("Reject wrong format",
+            validateDate("15-02-2026").valid === false
+        );
+
+
+        // tag test
+
+        test("Valid tag",
+            validateTag("Group Project").valid === true
+        );
+
+        test("Valid hyphen tag",
+            validateTag("Study-Session").valid === true
+        );
+
+        test("Reject numbers in tag",
+            validateTag("Project1").valid === false
+        );
+
+        test("Reject double spaces",
+            validateTag("Group  Project").valid === false
+        );
+
+        test("Reject special characters",
+            validateTag("Group@Home").valid === false
+        );
+
+
+        //   SAFE REGEX TEST
+        
+
+        test("Valid regex compiles",
+            compileRegex("\\d+").test("123") === true
+        );
+
+        test("Invalid regex does not crash",
+            compileRegex("[abc") === null
+        );
+
+    </script>
+</body>
+</html>
