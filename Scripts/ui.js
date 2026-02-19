@@ -15,12 +15,12 @@ import { compileRegex } from './validators.js';
 import { filterTasks } from './search.js';
 
 // queryselector calls on the startup 
-const taskTableBody = document.querySelector('#task-list'); 
+const taskTableBody = document.querySelector('#task-list');
 const form = document.querySelector('#task-form');
 const formFields = {
     title: document.querySelector('#title'),
     duration: document.querySelector('#duration'),
-    dueDate: document.querySelector('#due-date'), 
+    dueDate: document.querySelector('#due-date'),
     tag: document.querySelector('#tag'),
 };
 
@@ -33,20 +33,37 @@ const errorFields = {
 
 // search and filter controlling 
 const searchInput = document.querySelector('#search');
-const filterTagSelect =document.querySelector('#filter-tag');
-const filterDateInput =document.querySelector('#filter-date');
+const filterTagSelect = document.querySelector('#filter-tag');
+const filterDateInput = document.querySelector('#filter-date');
 const searchStatus = document.querySelector('#search-status');
-const statusEl =document.querySelector('#status');
-const capStatusEl =document.querySelector('#cap-status');
+const statusEl = document.querySelector('#status');
+const capStatusEl = document.querySelector('#cap-status');
 
 const unitSelect = document.querySelector('#unit');
 const themeSelect = document.querySelector('#theme-toggle');
 const capInput = document.querySelector('#cap');
 const importBtn = document.querySelector('#import-json');
-const exportBtn =document.querySelector('#export-json');
-const importFile =document.querySelector('#import-file');
+const exportBtn = document.querySelector('#export-json');
+const importFile = document.querySelector('#import-file');
 
+let sortKey = null;
+let sortAsc = true;
 
+function sortTasks(tasks) {
+    if (!sortKey) return tasks;
+    return [...tasks].sort((a, b) => {
+        let valA = a[sortKey];
+        let valB = b[sortKey];
+        if (sortKey === 'duration') {
+            valA = Number(valA);
+            valB = Number(valB);
+            return sortAsc ? valA - valB : valB - valA;
+        }
+        return sortAsc
+            ? String(valA).localeCompare(String(valB))
+            : String(valB).localeCompare(String(valA));
+    });
+}
 
 //accepts a regex pattern to highlight the matched text in titles and tags also clears and re-renders the task table from the provided task arrays
 export function renderTasks(tasks = getTasks(), highlightPattern = null) {
@@ -77,7 +94,7 @@ export function renderTasks(tasks = getTasks(), highlightPattern = null) {
     });
 
     attachTableEvents();
-    populateFilterTagOptions();   
+    populateFilterTagOptions();
 }
 
 // wrapping the regex match in <mark> so the browser higlights them visually
@@ -165,14 +182,14 @@ function clearErrors() {
     });
 }
 
-function showFieldError(field,message) {
-    if(errorFields[field]) {
+function showFieldError(field, message) {
+    if (errorFields[field]) {
         errorFields[field].textContent = message;
     }
 }
 
 function handleFieldError(error) {
-const fieldMap = { title: 'title', duration: 'duration', date: 'dueDate', tag: 'tag' };
+    const fieldMap = { title: 'title', duration: 'duration', date: 'dueDate', tag: 'tag' };
     const match = Object.keys(fieldMap).find(key => error.toLowerCase().includes(key));
     match ? showFieldError(fieldMap[match], error) : announceStatus(error, 'assertive');
 }
@@ -203,22 +220,22 @@ form.addEventListener('submit', e => {
 
     const editingId = form.dataset.editingId;
 
-if (editingId) {
-    const result = editTask(editingId, taskData);
-    if (result.success) {
-        handleSuccess('Task updated successfully.', true);
-     } else { 
-        handleFieldError(result.error);
-    }
+    if (editingId) {
+        const result = editTask(editingId, taskData);
+        if (result.success) {
+            handleSuccess('Task updated successfully.', true);
+        } else {
+            handleFieldError(result.error);
+        }
     } else {
 
-    const result = addTask(taskData);
-    if (result.success) {
-        handleSuccess('Task added successfully.');  
-    } else {
-        handleFieldError(result.error);
+        const result = addTask(taskData);
+        if (result.success) {
+            handleSuccess('Task added successfully.');
+        } else {
+            handleFieldError(result.error);
+        }
     }
-}
 });
 //  LIVE SEARCH 
 
@@ -233,24 +250,25 @@ function applyFilters() {
     const regex = compileRegex(query, 'gi');
 
     let tasks = getTasks();
-    
+
     if (query) {
         tasks = filterTasks(tasks, query);
     }
 
-    
+
     if (selectedTag) {
         tasks = tasks.filter(t => t.tag === selectedTag);
     }
 
-    
+
     if (selectedDate) {
         tasks = tasks.filter(t => t.dueDate === selectedDate);
     }
 
-    
+
     searchStatus.textContent = `${tasks.length} task${tasks.length !== 1 ? 's' : ''} found.`;
 
+    tasks = sortTasks(tasks);
     renderTasks(tasks, regex);
 }
 //prevents filter of the currently selected value to not rest on re-render
@@ -283,7 +301,7 @@ function drawChart(data) {
     const today = new Date();
     const points = [];
 
-    
+
     data.forEach((val, i) => {
         points.push({
             x: i * gap,
@@ -291,7 +309,7 @@ function drawChart(data) {
         });
     });
 
-    
+
     ctx.strokeStyle = '#2E6E8E';
     ctx.lineWidth = 2;
     ctx.beginPath();
@@ -300,7 +318,7 @@ function drawChart(data) {
     });
     ctx.stroke();
 
-    
+
     points.forEach((p, i) => {
         ctx.beginPath();
         ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
@@ -312,7 +330,7 @@ function drawChart(data) {
         ctx.fillStyle = '#555';
         ctx.font = '11px sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText(d.toLocaleDateString('en-US', {weekday: 'short'}), p.x, 145);
+        ctx.fillText(d.toLocaleDateString('en-US', { weekday: 'short' }), p.x, 145);
     });
 }
 //Fetches the latest computed stats and updates all dashboard display elements.
@@ -320,17 +338,17 @@ function drawChart(data) {
 export function updateStats() {
     const stats = getStats();
 
-    
+
     document.querySelector('#total-tasks').textContent = stats.totalTasks;
     document.querySelector('#total-duration').textContent = stats.totalDuration + ' ' + stats.unit;
     document.querySelector('#top-tag').textContent = stats.topTag || 'None';
 
-    
+
     document.querySelector('#cap-limit').textContent = stats.capStatus.capTarget;
     document.querySelector('#cap-used').textContent = stats.capStatus.totalDuration;
     document.querySelector('#cap-remaining').textContent = Math.abs(stats.capStatus.remaining);
 
-    
+
     if (capStatusEl) {
         if (stats.capStatus.capTarget === 0) {
             capStatusEl.setAttribute('aria-live', 'polite');
@@ -406,7 +424,7 @@ importFile.addEventListener('change', () => {
         try {
             const parsed = JSON.parse(e.target.result);
 
-            
+
             if (!Array.isArray(parsed)) {
                 announceStatus('Import failed: File must contain an array of tasks.', 'assertive');
                 return;
@@ -446,6 +464,26 @@ importFile.addEventListener('change', () => {
     reader.readAsText(file);
     importFile.value = '';
 });
+document.querySelectorAll('.sort-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const key = btn.dataset.key;
+        if (sortKey === key) {
+            sortAsc = !sortAsc;
+        } else {
+            sortKey = key;
+            sortAsc = true;
+        }
+        document.querySelectorAll('.sort-btn').forEach(b => {
+            b.textContent = b.dataset.key.charAt(0).toUpperCase() +
+                b.dataset.key.slice(0) + ' ↕';
+        });
+        btn.textContent = btn.dataset.key === 'dueDate' ? 'Due Date' :
+            btn.dataset.key.charAt(0).toUpperCase() +
+            btn.dataset.key.slice(1);
+        btn.textContent += sortAsc ? ' ↑' : ' ↓';
+        applyFilters();
+    });
+});
 
 
 // ARIA STATUS ANNOUNCEMENT  thst updated the hidden live region with a message so screeen readers can announce feedback 
@@ -455,7 +493,7 @@ export function announceStatus(message, mode = 'polite') {
     statusEl.textContent = message;
 }
 
-// INITIAL RENDER and  Bootstraping  the app on page load — apply saved settings, fill the task table,
+
 loadSettingsUI();
 renderTasks();
 updateStats();
