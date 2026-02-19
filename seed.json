@@ -1,0 +1,93 @@
+
+[
+    {
+        "id": "rec_seed_001",
+        "title": "Math Assignment",
+        "duration": 60,
+        "dueDate": "2026-02-18",
+        "tag": "Study",
+        "createdAt": "2026-02-18T08:00:00.000Z",
+        "updatedAt": "2026-02-18T08:00:00.000Z"
+    },
+    {
+        "id": "rec_seed_002",
+        "title": "Group Project Meeting",
+        "duration": 90,
+        "dueDate": "2026-02-17",
+        "tag": "Meeting",
+        "createdAt": "2026-02-17T09:00:00.000Z",
+        "updatedAt": "2026-02-17T09:00:00.000Z"
+    },
+    {
+        "id": "rec_seed_003",
+        "title": "History Essay Draft",
+        "duration": 120,
+        "dueDate": "2026-02-16",
+        "tag": "Homework",
+        "createdAt": "2026-02-16T10:00:00.000Z",
+        "updatedAt": "2026-02-16T10:00:00.000Z"
+    },
+    {
+        "id": "rec_seed_004",
+        "title": "Physics Lab Report",
+        "duration": 75,
+        "dueDate": "2026-02-15",
+        "tag": "Lab",
+        "createdAt": "2026-02-15T11:00:00.000Z",
+        "updatedAt": "2026-02-15T11:00:00.000Z"
+    },
+    {
+        "id": "rec_seed_005",
+        "title": "Basketball Practice",
+        "duration": 90,
+        "dueDate": "2026-02-14",
+        "tag": "Sports",
+        "createdAt": "2026-02-14T14:00:00.000Z",
+        "updatedAt": "2026-02-14T14:00:00.000Z"
+    },
+    {
+        "id": "rec_seed_006",
+        "title": "Club Event Planning",
+        "duration": 45,
+        "dueDate": "2026-02-13",
+        "tag": "Event",
+        "createdAt": "2026-02-13T13:00:00.000Z",
+        "updatedAt": "2026-02-13T13:00:00.000Z"
+    },
+    {
+        "id": "rec_seed_007",
+        "title": "English Essay Proofreading",
+        "duration": 50,
+        "dueDate": "2026-02-12",
+        "tag": "Homework",
+        "createdAt": "2026-02-12T15:00:00.000Z",
+        "updatedAt": "2026-02-12T15:00:00.000Z"
+    },
+    {
+        "id": "rec_seed_008",
+        "title": "Chemistry Lab Prep",
+        "duration": 110,
+        "dueDate": "2026-02-18",
+        "tag": "Lab",
+        "createdAt": "2026-02-18T07:00:00.000Z",
+        "updatedAt": "2026-02-18T07:00:00.000Z"
+    },
+    {
+        "id": "rec_seed_009",
+        "title": "Study Group Session",
+        "duration": 80,
+        "dueDate": "2026-02-17",
+        "tag": "Study",
+        "createdAt": "2026-02-17T16:00:00.000Z",
+        "updatedAt": "2026-02-17T16:00:00.000Z"
+    },
+    {
+        "id": "rec_seed_010",
+        "title": "Campus Tour Volunteering",
+        "duration": 120,
+        "dueDate": "2026-02-15",
+        "tag": "Event",
+        "createdAt": "2026-02-15T09:00:00.000Z",
+        "updatedAt": "2026-02-15T09:00:00.000Z"
+    }
+]
