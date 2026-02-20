@@ -230,6 +230,12 @@ Then open: http://localhost:8000
 
 ---
 
+🎨 Color Theme
+The app uses a dark navy blue primary palette with a gold/yellow accent.
+Why blue? Blue is associated with trust, focus, and calm — qualities that help students concentrate. Dark navy also gives the app an academic, professional feel similar to university branding.
+Why gold? Gold naturally draws the eye to important actions like buttons and highlights. It represents achievement and motivation, encouraging students to complete tasks. The blue and gold combination is also a classic academic pairing — think graduation colors and university crests.
+Together, the palette creates a balance between calm focus and motivation, without the anxiety that harsher colors like red can trigger.
+
 ## 🏁 Final Notes
 
 This project demonstrates:
