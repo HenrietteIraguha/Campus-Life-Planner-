@@ -1,95 +1,113 @@
-🎓 Campus Life Planner
+# 🎓 Campus Life Planner  
+### Plan smarter. Study better. Stay balanced.
 
-A clean, student-focused task planner built with vanilla HTML, CSS, and JavaScript — no frameworks, no build tools, just solid web fundamentals.
+<p align="center">
+  <strong>A clean, student-focused task planner built with pure web fundamentals.</strong><br>
+  <em>No frameworks. No build tools. Just HTML, CSS & JavaScript.</em>
+</p>
 
-✨ Organize tasks • ⏱️ Track study time • 🎯 Stay on target • ♿ Fully accessible
+<p align="center">
+  ✨ Organize tasks • ⏱️ Track study time • 🎯 Stay on target • ♿ Accessibility-first
+</p>
 
-<p align="center"> <img src="assets/campus.jpg.png" alt="Campus Life Planner preview" width="80%"> </p>
-🔗 Links
+<p align="center">
+  <img src="assets/campus.jpg.png" alt="Campus Life Planner preview" width="85%">
+</p>
 
-🌐 Live Demo: (add GitHub Pages link)
+---
 
-📦 Repository: (add repo link)
+## 🔗 Links
 
-🎥 Demo Video: https://youtu.be/mKFxnaMuHTU
+- 🌐 **Live Demo:** *(add GitHub Pages link)*  
+- 📦 **Repository:** *(add repo link)*  
+- 🎥 **Demo Video:** https://youtu.be/mKFxnaMuHTU  
 
-🌟 Why Campus Life Planner?
+---
 
-University life gets chaotic fast.
-This app helps students see their workload clearly, plan realistically, and stay in control — all while respecting accessibility and performance best practices.
+## 🌟 Why Campus Life Planner?
 
-✨ What You Can Do
-✅ Task Management
+University life gets chaotic — fast.
 
-Add, edit, and delete tasks
+**Campus Life Planner** helps students:
+- See their workload clearly  
+- Plan realistically  
+- Stay in control without feeling overwhelmed  
 
-Inline form validation (instant feedback)
+All while respecting performance, clarity, and accessibility from day one.
 
-Confirmation before deleting
+---
 
-📊 Smart Dashboard
+## ✨ What You Can Do
 
-Total tasks & study duration
+### ✅ Task Management
+- Add, edit, and delete tasks  
+- Inline form validation with instant feedback  
+- Confirmation prompts before deleting  
 
-Most-used tag
+### 📊 Smart Dashboard
+- Total tasks & total study duration  
+- Most-used tag  
+- 7-day workload trend  
+- Cap / target warnings with screen-reader alerts  
 
-7-day workload trend
+### 🔍 Search & Filter
+- Live regex search (safe — never crashes)  
+- Filter by tag or date  
+- Sorting and filtering work together  
 
-Cap/target warnings with screen-reader alerts
+### 🎨 Personalization
+- Light / Dark mode  
+- Minutes ↔ Hours toggle  
+- All preferences saved automatically  
 
-🔍 Search & Filter
+---
 
-Live regex search (safe — never crashes)
+## 🖼️ Interface Overview
 
-Filter by tag or date
+| Section | What You See |
+|----------|------------------------------|
+| 📊 Dashboard | Stats, trends, workload insights |
+| 📋 Tasks | Sortable, searchable task table |
+| 🎛️ Settings | Theme, time format, import/export |
+| ♿ Accessibility | Keyboard & screen-reader support |
 
-Sorting + filtering work together
+---
 
-🎨 Personalization
+## ⌨️ Keyboard Friendly (No Mouse Needed)
 
-Light / Dark theme
+| Shortcut | Action |
+|----------|--------|
+| Alt + A | Add task |
+| Alt + D | Dashboard |
+| Alt + T | Tasks |
+| Alt + S | Settings |
+| Alt + / | Search |
+| Esc | Close dialogs |
 
-Minutes ↔ Hours toggle
+✔ Skip link included  
+✔ Visible focus states  
+✔ Screen-reader announcements  
 
-All settings saved automatically
+---
 
-🖼️ Interface Preview
-Dashboard	Tasks
-📊 Stats + Chart	📋 Sortable Table
-Settings	Accessibility
-🎛️ Theme & Import	♿ Keyboard & ARIA
+## ♿ Accessibility First (Not an Afterthought)
 
-(You can later replace this with screenshots)
+- Semantic HTML landmarks  
+- Proper heading hierarchy  
+- ARIA live regions for dynamic updates  
+- WCAG AA color contrast  
+- Fully usable with keyboard only  
 
-⌨️ Keyboard Friendly (No Mouse Needed)
-Shortcut	Action
-Alt + A	Add Task
-Alt + D	Dashboard
-Alt + T	Tasks
-Alt + S	Settings
-Alt + /	Search
-Esc	Close dialogs
+This project was designed with accessibility from day one — not patched in later.
 
-✔️ Skip link included
-✔️ Visible focus styles
-✔️ Screen reader announcements
+---
 
-♿ Accessibility First
+## 🧠 Under the Hood
 
-Semantic HTML landmarks
+<details>
+<summary><strong>📁 File Structure</strong></summary>
 
-Proper heading hierarchy
-
-ARIA live regions for dynamic updates
-
-WCAG AA color contrast
-
-Fully usable with keyboard only
-
-This project was built with accessibility in mind from day one, not added later.
-
-🧠 Under the Hood (Optional Reading)
-<details> <summary><strong>📁 File Structure</strong></summary>
+```
 campus-life-planner/
 ├── index.html
 ├── styles/styles.css
@@ -103,82 +121,86 @@ campus-life-planner/
 ├── seed.json
 ├── tests.html
 └── README.md
+```
 
-</details> <details> <summary><strong>🔐 Regex Validation</strong></summary>
+</details>
 
-Title length & spacing rules
+<details>
+<summary><strong>🔐 Regex Validation</strong></summary>
 
-Duplicate word detection (Math Math)
-
-Strict date format + calendar check
-
-Positive numeric duration only
-
-Clean tag names (letters, spaces, hyphens)
+- Title length & spacing rules  
+- Duplicate word detection (e.g., Math Math)  
+- Strict date format + calendar validation  
+- Positive numeric durations only  
+- Clean tag names (letters, spaces, hyphens)  
 
 All regex logic lives in validators.js.
 
-</details> <details> <summary><strong>💾 Data Persistence</strong></summary>
+</details>
 
-Tasks and settings stored in localStorage
+<details>
+<summary><strong>💾 Data Persistence</strong></summary>
 
-JSON import/export with structure validation
+- Tasks and settings stored in localStorage  
+- JSON import/export with structure validation  
+- Data survives page reloads  
 
-Data survives page reloads
+</details>
 
-</details> <details> <summary><strong>🧪 Testing</strong></summary>
+<details>
+<summary><strong>🧪 Testing</strong></summary>
 
 Open tests.html in the browser to run unit tests for:
-
-Validators
-
-Regex safety
-
-Search logic
+- Validators  
+- Regex safety  
+- Search logic  
 
 No libraries required.
 
 </details>
-🌱 Sample Data
+
+---
+
+## 🌱 Sample Data
 
 A seed.json file is included with 10+ realistic tasks:
+- Multiple tags  
+- Edge-case durations  
+- Date ranges for chart testing  
 
-Different tags
-
-Edge-case durations
-
-Date ranges for chart testing
-
-Load via:
+Load via:  
 Settings → Import JSON → seed.json
 
-🚀 Run Locally
+---
+
+## 🚀 Run Locally
+
+```bash
 git clone https://github.com/HenrietteIraguha/your-repo-name.git
 cd your-repo-name
 python -m http.server 8000
+```
 
+Then open:  
+http://localhost:8000
 
-Then open:
-👉 http://localhost:8000
+---
 
-👩‍💻 Author
+## 👩‍💻 Author
 
-GitHub: https://github.com/HenrietteIraguha
+- GitHub: https://github.com/HenrietteIraguha  
+- Email: h.iraguha@alustudent.com  
 
-Email: h.iraguha@alustudent.com
+---
 
-🏁 Final Notes
+## 🏁 Final Notes
 
 This project demonstrates:
+- Strong JavaScript architecture  
+- Real-world form validation  
+- Accessibility best practices  
+- Clean UI/UX thinking  
 
-Strong JavaScript architecture
-
-Real-world form validation
-
-Accessibility best practices
-
-Clean UI/UX thinking
-
-No frameworks — just fundamentals
+No frameworks — just solid fundamentals.
 
 © 2026 — Campus Life Planner
