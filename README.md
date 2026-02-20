@@ -18,7 +18,7 @@
 
 ## 🔗 Links
 
-- 🌐 **Live Demo:** *(add GitHub Pages link)*  
+- 🌐 **Live Demo:** https://henrietteiraguha.github.io/Campus-Life-Planner-/
 - 📦 **Repository:** https://github.com/HenrietteIraguha/Campus-Life-Planner-
 - 🎥 **Demo Video:** https://youtu.be/mKFxnaMuHTU  
 
