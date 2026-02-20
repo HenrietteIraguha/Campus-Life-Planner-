@@ -1,307 +1,184 @@
-📅 Campus Life Planner
+🎓 Campus Life Planner
 
-A responsive, accessible, vanilla HTML/CSS/JavaScript web application that helps students organize tasks, track study time, and stay on top of their academic life — all without frameworks or build tools.
+A clean, student-focused task planner built with vanilla HTML, CSS, and JavaScript — no frameworks, no build tools, just solid web fundamentals.
 
-🌐 Live Demo & Repository
+✨ Organize tasks • ⏱️ Track study time • 🎯 Stay on target • ♿ Fully accessible
 
-Live Site: 👉 Insert GitHub Pages URL here
+<p align="center"> <img src="assets/campus.jpg.png" alt="Campus Life Planner preview" width="80%"> </p>
+🔗 Links
 
-Repository: 👉 Insert GitHub Repo URL here
+🌐 Live Demo: (add GitHub Pages link)
 
-📌 Project Theme
+📦 Repository: (add repo link)
 
-Campus Life Planner — one of the three official assignment themes.
+🎥 Demo Video: (add unlisted link)
 
-Students can:
+🌟 Why Campus Life Planner?
 
-Add tasks with a title, due date, duration, and tag
+University life gets chaotic fast.
+This app helps students see their workload clearly, plan realistically, and stay in control — all while respecting accessibility and performance best practices.
 
-View tasks in a sortable table
+✨ What You Can Do
+✅ Task Management
 
-Search and filter in real time
+Add, edit, and delete tasks
 
-Track total study duration against a personal cap/target
+Inline form validation (instant feedback)
 
-Persist everything using localStorage
+Confirmation before deleting
 
-📂 File Structure
-campus-life-planner/
-├── index.html              # Main HTML (semantic landmarks)
-├── styles/
-│   └── styles.css          # Mobile-first CSS, Flexbox, 3 breakpoints,
-│                           # dark/light theme, animations
-├── Scripts/
-│   ├── ui.js               # DOM rendering, events, sorting, charts, import/export
-│   ├── state.js            # App state, CRUD logic, stats, theme management
-│   ├── storage.js          # localStorage read/write
-│   ├── validators.js       # All regex patterns & validation logic
-│   └── search.js           # Safe regex-powered live search
-├── assets/
-│   ├── campus.jpg.png      # Dashboard image
-│   └── studentlife.png     # Sidebar image
-├── seed.json               # 10+ sample task records
-├── tests.html              # In-browser unit tests
-└── README.md               # Project documentation
+📊 Smart Dashboard
 
-✨ Features Overview
-📊 Pages & Sections
-Section	Description
-Dashboard	Total tasks, total duration, top tag, cap/target status, 7-day trend chart
-Add / Edit Task	Form with live inline validation
-Tasks Table	Sortable table with Edit/Delete actions
-Search & Filter	Live regex search, tag filter, date filter
-Settings	Duration units, theme toggle, cap/target, JSON import/export
-About	Project purpose and contact info
-⚙️ Core Functionality
+Total tasks & study duration
 
-Add, edit, and delete tasks (with delete confirmation)
+Most-used tag
 
-Inline editing — Edit pre-fills the form
+7-day workload trend
 
-Sortable table columns:
+Cap/target warnings with screen-reader alerts
 
-Title
+🔍 Search & Filter
 
-Due Date
+Live regex search (safe — never crashes)
 
-Duration
-(↑ ascending / ↓ descending toggle)
+Filter by tag or date
 
-Live regex-powered search with:
+Sorting + filtering work together
 
-Safe compilation (no crashes)
+🎨 Personalization
 
-Match highlighting
+Light / Dark theme
 
-Filter by:
+Minutes ↔ Hours toggle
 
-Tag (auto-generated dropdown)
+All settings saved automatically
 
-Date
+🖼️ Interface Preview
+Dashboard	Tasks
+📊 Stats + Chart	📋 Sortable Table
+Settings	Accessibility
+🎛️ Theme & Import	♿ Keyboard & ARIA
 
-Search + Sort work together
+(You can later replace this with screenshots)
 
-Dashboard statistics:
-
-Total tasks
-
-Total duration
-
-Top tag
-
-7-day chart
-
-Cap / target system with ARIA live announcements
-
-Duration unit toggle (minutes ↔ hours)
-
-Light / Dark theme (persisted)
-
-JSON import & export
-
-Full keyboard accessibility
-
-localStorage persistence
-
-🎞️ Animations & Transitions
-
-Task rows fade in with staggered animation
-
-Stat cards lift on hover with shadow
-
-Feature cards gently scale on hover
-
-Buttons lift on hover and press on click
-
-Form inputs glow blue on focus
-
-Table rows highlight on hover
-
-🔐 Regex Catalog
-
-All patterns live in Scripts/validators.js.
-
-🏷️ Title Validation
-/^(?!\s)(?!.*\s$)(?!.*\s{2,}).{2,100}$/
-
-
-No leading/trailing spaces
-
-No consecutive spaces
-
-Length: 2–100 characters
-
-⏱️ Duration Validation
-/^[1-9]\d{0,4}$/
-
-
-Positive integers only (1–99999)
-
-No decimals, zero, or leading zeros
-
-📅 Due Date Validation
-/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/
-
-
-Strict YYYY-MM-DD format
-
-Secondary calendar check catches impossible dates
-
-🏷️ Tag Validation
-/^[A-Za-z]+(?:[ -][A-Za-z]+)*$/
-
-
-Letters only
-
-Single spaces or hyphens allowed
-
-No leading/trailing separators
-
-🔁 Duplicate Word Detection (Advanced)
-/\b(\w+)\s+\1\b/i
-
-
-Uses back-references to catch:
-
-"the the"
-
-"Math Math"
-
-"study study"
-
-🔍 Safe Live Search Compiler
-export function compileRegex(input, flags = "i") {
-  try {
-    return input ? new RegExp(input, flags) : null;
-  } catch {
-    return null;
-  }
-}
-
-
-Prevents crashes from invalid regex input
-
-⌨️ Keyboard Shortcuts
+⌨️ Keyboard Friendly (No Mouse Needed)
 Shortcut	Action
-Tab / Shift+Tab	Navigate elements
-Enter / Space	Activate buttons
-Escape	Close dialogs
-Alt + A	Jump to Add Task
-Alt + D	Jump to Dashboard
-Alt + T	Jump to Tasks Table
-Alt + S	Jump to Settings
-Alt + /	Focus Search
-Skip Link	Jump to main content
-♿ Accessibility Highlights
+Alt + A	Add Task
+Alt + D	Dashboard
+Alt + T	Tasks
+Alt + S	Settings
+Alt + /	Search
+Esc	Close dialogs
 
-Semantic landmarks: header, nav, main, section, footer
+✔️ Skip link included
+✔️ Visible focus styles
+✔️ Screen reader announcements
+
+♿ Accessibility First
+
+Semantic HTML landmarks
 
 Proper heading hierarchy
 
-All inputs paired with <label>
+ARIA live regions for dynamic updates
 
-ARIA live regions for:
+WCAG AA color contrast
 
-Task status updates
+Fully usable with keyboard only
 
-Search results count
+This project was built with accessibility in mind from day one, not added later.
 
-Cap/target alerts
+🧠 Under the Hood (Optional Reading)
+<details> <summary><strong>📁 File Structure</strong></summary>
+campus-life-planner/
+├── index.html
+├── styles/styles.css
+├── Scripts/
+│   ├── ui.js
+│   ├── state.js
+│   ├── storage.js
+│   ├── validators.js
+│   └── search.js
+├── assets/
+├── seed.json
+├── tests.html
+└── README.md
 
-WCAG AA color contrast (light & dark)
+</details> <details> <summary><strong>🔐 Regex Validation</strong></summary>
 
-Fully usable keyboard-only
+Title length & spacing rules
 
-💾 Data Persistence
-localStorage Keys
-Key	Purpose
-clp_tasks	All task records
-clp_settings	Theme, unit, cap/target
-Task Data Model
-{
-  "id": "rec_1748293847362_412",
-  "title": "Linear Algebra Assignment",
-  "duration": 90,
-  "dueDate": "2025-10-15",
-  "tag": "Homework",
-  "createdAt": "2025-10-01T08:00:00.000Z",
-  "updatedAt": "2025-10-01T08:00:00.000Z"
-}
+Duplicate word detection (Math Math)
 
-🌱 Seed Data
+Strict date format + calendar check
 
-seed.json contains 10+ diverse tasks covering:
+Positive numeric duration only
+
+Clean tag names (letters, spaces, hyphens)
+
+All regex logic lives in validators.js.
+
+</details> <details> <summary><strong>💾 Data Persistence</strong></summary>
+
+Tasks and settings stored in localStorage
+
+JSON import/export with structure validation
+
+Data survives page reloads
+
+</details> <details> <summary><strong>🧪 Testing</strong></summary>
+
+Open tests.html in the browser to run unit tests for:
+
+Validators
+
+Regex safety
+
+Search logic
+
+No libraries required.
+
+</details>
+🌱 Sample Data
+
+A seed.json file is included with 10+ realistic tasks:
+
+Different tags
 
 Edge-case durations
 
-Multiple tags
-
 Date ranges for chart testing
 
-Multi-word tags
+Load via:
+Settings → Import JSON → seed.json
 
-Load it via:
-Settings → Import JSON → select seed.json
-
-🧪 Testing
-
-Open tests.html directly in the browser.
-
-Covers:
-
-Title validation (including duplicate words)
-
-Duration edge cases
-
-Date validation
-
-Tag validation
-
-Safe regex compilation
-
-Search filtering logic
-
-🚀 Running Locally
-
-No dependencies required.
-
+🚀 Run Locally
 git clone https://github.com/HenrietteIraguha/your-repo-name.git
 cd your-repo-name
-
-
-Because ES modules are used, run a local server:
-
-# Python
 python -m http.server 8000
 
 
-Then visit:
+Then open:
 👉 http://localhost:8000
 
-🎥 Demo Video
-
-📹 Insert unlisted YouTube / Drive link here
-
-Demo includes:
-
-Keyboard-only navigation
-
-CRUD operations
-
-Sorting & searching
-
-Regex edge cases
-
-ARIA announcements
-
-Responsive layout
-
 👩‍💻 Author
-
-Henriette Iraguha
 
 GitHub: https://github.com/HenrietteIraguha
 
 Email: h.iraguha@alustudent.com
 
-© 2026 Campus Life Planner
+🏁 Final Notes
+
+This project demonstrates:
+
+Strong JavaScript architecture
+
+Real-world form validation
+
+Accessibility best practices
+
+Clean UI/UX thinking
+
+No frameworks — just fundamentals
+
+© 2026 — Campus Life Planner
