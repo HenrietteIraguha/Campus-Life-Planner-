@@ -1,19 +1,13 @@
-
-// Handling  all localStorage interactions for the Campus Life Plannern under keys
+//handling loacl storage for campus planner under keys 
 
 const TASKS_KEY = "clp_tasks";
 const SETTINGS_KEY = "clp_settings";
 
-
-// Loads the saved tasks array from localStorage.
-
-export function loadTasks() {
+export function readTasks() {
     try {
         const raw = localStorage.getItem(TASKS_KEY);
         if (!raw) return [];
         const parsed = JSON.parse(raw);
-
-        // Ensure we always return an array
         return Array.isArray(parsed) ? parsed : [];
     } catch (error) {
         console.error("Failed to load tasks:", error);
@@ -21,9 +15,6 @@ export function loadTasks() {
     }
 }
 
-
-// Saves the full tasks array to localStorage, replacing what was there before.
- 
 export function saveTasks(tasks) {
     try {
         localStorage.setItem(TASKS_KEY, JSON.stringify(tasks));
@@ -32,27 +23,19 @@ export function saveTasks(tasks) {
     }
 }
 
-
-//  Load app settings from localStorage and if no settings are saved ,returns default settings.
-
- 
-export function loadSettings() {
+export function showSettings() {
     try {
         const raw = localStorage.getItem(SETTINGS_KEY);
         if (!raw) {
             return getDefaultSettings();
         }
-
         const parsed = JSON.parse(raw);
-        return { ...getDefaultSettings(),... parsed };
+        return { ...getDefaultSettings(), ...parsed };
     } catch (error) {
         console.error("Failed to load settings:", error);
         return getDefaultSettings();
     }
 }
-
-
-// Saves the settings object to localStorage, replacing the previous saved settings.
 
 export function saveSettings(settings) {
     try {
@@ -62,12 +45,10 @@ export function saveSettings(settings) {
     }
 }
 
-// Default app settings.
-
 function getDefaultSettings() {
     return {
-        unit: "minutes",     
-        theme: "light",      
-        capTarget: 0         
+        unit: "minutes",
+        theme: "light",
+        capTarget: 0
     };
 }

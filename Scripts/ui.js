@@ -14,7 +14,6 @@ import {
 import { compileRegex } from './validators.js';
 import { filterTasks } from './search.js';
 
-// queryselector calls on the startup 
 const taskTableBody = document.querySelector('#task-list');
 const form = document.querySelector('#task-form');
 const formFields = {
@@ -30,8 +29,8 @@ const errorFields = {
     dueDate: document.querySelector('#due-date-error'),
     tag: document.querySelector('#tag-error'),
 };
-
 // search and filter controlling 
+
 const searchInput = document.querySelector('#search');
 const filterTagSelect = document.querySelector('#filter-tag');
 const filterDateInput = document.querySelector('#filter-date');
@@ -65,8 +64,7 @@ function sortTasks(tasks) {
     });
 }
 
-//accepts a regex pattern to highlight the matched text in titles and tags also clears and re-renders the task table from the provided task arrays
-export function renderTasks(tasks = getTasks(), highlightPattern = null) {
+export function displayTasks(tasks = getTasks(), highlightPattern = null) {
     taskTableBody.innerHTML = '';
 
     if (tasks.length === 0) {
@@ -93,11 +91,10 @@ export function renderTasks(tasks = getTasks(), highlightPattern = null) {
         taskTableBody.appendChild(tr);
     });
 
-    attachTableEvents();
-    populateFilterTagOptions();
+    addTableClicks();
+    fillTagFilter();
 }
 
-// wrapping the regex match in <mark> so the browser higlights them visually
 function highlightText(text, regex) {
     if (!regex) return text;
     try {
@@ -107,11 +104,10 @@ function highlightText(text, regex) {
     }
 }
 
-// Attaches click handllers to evry edit and delete button in the rendered table 
-function attachTableEvents() {
+function addTableClicks() {
     document.querySelectorAll('.edit-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            populateForm(btn.dataset.id);
+            fillForm(btn.dataset.id);
         });
     });
 
@@ -121,17 +117,17 @@ function attachTableEvents() {
             if (confirm('Are you sure you want to delete this task?')) {
                 const result = deleteTask(btn.dataset.id);
                 if (result.success) {
-                    renderTasks();
+                    displayTasks();
                     updateStats();
-                    announceStatus('Task deleted successfully.', 'polite');
+                    showStatus('Task deleted successfully.', 'polite');
                 } else {
-                    announceStatus(result.error, 'assertive');
+                    showStatus(result.error, 'assertive');
                 }
             }
         });
     });
 }
-// Keyboard shortcuts that scrolls to a section 
+
 document.addEventListener('keydown', (e) => {
     if (e.altKey) {
         switch (e.key) {
@@ -160,8 +156,7 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Fills the form fields with an existing task's data so the user can edit it and stores the task id on the form elemet so the submit handler knows.
-function populateForm(taskId) {
+function fillForm(taskId) {
     const task = getTasks().find(t => t.id === taskId);
     if (!task) return;
 
@@ -175,7 +170,6 @@ function populateForm(taskId) {
     formFields.title.focus();
 }
 
-// the functions clears inline validation,display validation error under the correct fields and handles all cleanup after successful add or edit
 function clearErrors() {
     Object.values(errorFields).forEach(el => {
         if (el) el.textContent = '';
@@ -188,24 +182,22 @@ function showFieldError(field, message) {
     }
 }
 
-function handleFieldError(error) {
+function showError(error) {
     const fieldMap = { title: 'title', duration: 'duration', date: 'dueDate', tag: 'tag' };
     const match = Object.keys(fieldMap).find(key => error.toLowerCase().includes(key));
-    match ? showFieldError(fieldMap[match], error) : announceStatus(error, 'assertive');
+    match ? showFieldError(fieldMap[match], error) : showStatus(error, 'assertive');
 }
 
-function handleSuccess(message, isEdit = false) {
+function afterSave(message, isEdit = false) {
     if (isEdit) {
         delete form.dataset.editingId;
         form.querySelector('button[type="submit"]').textContent = 'Save Task';
     }
     form.reset();
-    renderTasks();
+    displayTasks();
     updateStats();
-    announceStatus(message, 'polite');
+    showStatus(message, 'polite');
 }
-
-// Handles both adding a new task and saving edits to an existing one 
 
 form.addEventListener('submit', e => {
     e.preventDefault();
@@ -223,27 +215,25 @@ form.addEventListener('submit', e => {
     if (editingId) {
         const result = editTask(editingId, taskData);
         if (result.success) {
-            handleSuccess('Task updated successfully.', true);
+            afterSave('Task updated successfully.', true);
         } else {
-            handleFieldError(result.error);
+            showError(result.error);
         }
     } else {
-
         const result = addTask(taskData);
         if (result.success) {
-            handleSuccess('Task added successfully.');
+            afterSave('Task added successfully.');
         } else {
-            handleFieldError(result.error);
+            showError(result.error);
         }
     }
 });
-//  LIVE SEARCH 
 
-searchInput.addEventListener('input', applyFilters);
-filterTagSelect.addEventListener('change', applyFilters);
-filterDateInput.addEventListener('change', applyFilters);
+searchInput.addEventListener('input', useFilters);
+filterTagSelect.addEventListener('change', useFilters);
+filterDateInput.addEventListener('change', useFilters);
 
-function applyFilters() {
+function useFilters() {
     const query = searchInput.value.trim();
     const selectedTag = filterTagSelect.value;
     const selectedDate = filterDateInput.value;
@@ -255,24 +245,21 @@ function applyFilters() {
         tasks = filterTasks(tasks, query);
     }
 
-
     if (selectedTag) {
         tasks = tasks.filter(t => t.tag === selectedTag);
     }
-
 
     if (selectedDate) {
         tasks = tasks.filter(t => t.dueDate === selectedDate);
     }
 
-
     searchStatus.textContent = `${tasks.length} task${tasks.length !== 1 ? 's' : ''} found.`;
 
     tasks = sortTasks(tasks);
-    renderTasks(tasks, regex);
+    displayTasks(tasks, regex);
 }
-//prevents filter of the currently selected value to not rest on re-render
-function populateFilterTagOptions() {
+
+function fillTagFilter() {
     const tasks = getTasks();
     const tags = [...new Set(tasks.map(t => t.tag))].sort();
     const currentValue = filterTagSelect.value;
@@ -287,7 +274,6 @@ function populateFilterTagOptions() {
     });
 }
 
-// draws a simple chart on a  <canvas> showing total task duration per day for the last 7 days 
 function drawChart(data) {
     const canvas = document.querySelector('#weekly-chart');
     if (!canvas) return;
@@ -301,14 +287,12 @@ function drawChart(data) {
     const today = new Date();
     const points = [];
 
-
     data.forEach((val, i) => {
         points.push({
             x: i * gap,
             y: 110 - (val / max) * 90
         });
     });
-
 
     ctx.strokeStyle = '#2E6E8E';
     ctx.lineWidth = 2;
@@ -317,7 +301,6 @@ function drawChart(data) {
         i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
     });
     ctx.stroke();
-
 
     points.forEach((p, i) => {
         ctx.beginPath();
@@ -333,21 +316,17 @@ function drawChart(data) {
         ctx.fillText(d.toLocaleDateString('en-US', { weekday: 'short' }), p.x, 145);
     });
 }
-//Fetches the latest computed stats and updates all dashboard display elements.
 
 export function updateStats() {
     const stats = getStats();
-
 
     document.querySelector('#total-tasks').textContent = stats.totalTasks;
     document.querySelector('#total-duration').textContent = stats.totalDuration + ' ' + stats.unit;
     document.querySelector('#top-tag').textContent = stats.topTag || 'None';
 
-
     document.querySelector('#cap-limit').textContent = stats.capStatus.capTarget;
     document.querySelector('#cap-used').textContent = stats.capStatus.totalDuration;
     document.querySelector('#cap-remaining').textContent = Math.abs(stats.capStatus.remaining);
-
 
     if (capStatusEl) {
         if (stats.capStatus.capTarget === 0) {
@@ -364,7 +343,6 @@ export function updateStats() {
     drawChart(stats.last7Days);
 }
 
-// Reads the saved settings and populates the setttings controls to match
 function loadSettingsUI() {
     const settings = getSettings();
     if (unitSelect) unitSelect.value = settings.unit || 'minutes';
@@ -376,25 +354,24 @@ function loadSettingsUI() {
 unitSelect.addEventListener('change', () => {
     updateSettings({ unit: unitSelect.value });
     updateStats();
-    announceStatus('Duration unit updated.', 'polite');
+    showStatus('Duration unit updated.', 'polite');
 });
 
 themeSelect.addEventListener('change', () => {
     updateSettings({ theme: themeSelect.value });
     applyTheme(themeSelect.value);
-    announceStatus('Theme updated.', 'polite');
+    showStatus('Theme updated.', 'polite');
 });
-
 
 capInput.addEventListener('change', () => {
     const value = parseInt(capInput.value, 10);
     if (!isNaN(value) && value >= 0) {
         updateSettings({ capTarget: value });
         updateStats();
-        announceStatus('Cap target updated.', 'polite');
+        showStatus('Cap target updated.', 'polite');
     }
 });
-// helps the tasks array to a JSON file and triggers a browser download.
+
 exportBtn.addEventListener('click', () => {
     const tasks = getTasks();
     const blob = new Blob([JSON.stringify(tasks, null, 2)], { type: 'application/json' });
@@ -404,12 +381,8 @@ exportBtn.addEventListener('click', () => {
     a.download = 'campus-planner-tasks.json';
     a.click();
     URL.revokeObjectURL(url);
-    announceStatus('Tasks exported successfully.', 'polite');
+    showStatus('Tasks exported successfully.', 'polite');
 });
-
-
-// clicking the imprt button triggers the file input which opens file picker reads and parses the JSON, validates its structure, then imports
-
 
 importBtn.addEventListener('click', () => {
     importFile.click();
@@ -424,9 +397,8 @@ importFile.addEventListener('change', () => {
         try {
             const parsed = JSON.parse(e.target.result);
 
-
             if (!Array.isArray(parsed)) {
-                announceStatus('Import failed: File must contain an array of tasks.', 'assertive');
+                showStatus('Import failed: File must contain an array of tasks.', 'assertive');
                 return;
             }
 
@@ -439,10 +411,9 @@ importFile.addEventListener('change', () => {
             );
 
             if (!isValid) {
-                announceStatus('Import failed: One or more tasks are missing required fields.', 'assertive');
+                showStatus('Import failed: One or more tasks are missing required fields.', 'assertive');
                 return;
             }
-
 
             parsed.forEach(task => {
                 addTask({
@@ -453,17 +424,18 @@ importFile.addEventListener('change', () => {
                 });
             });
 
-            renderTasks();
+            displayTasks();
             updateStats();
-            announceStatus(`${parsed.length} tasks imported successfully.`, 'polite');
+            showStatus(`${parsed.length} tasks imported successfully.`, 'polite');
 
         } catch {
-            announceStatus('Import failed: Invalid JSON file.', 'assertive');
+            showStatus('Import failed: Invalid JSON file.', 'assertive');
         }
     };
     reader.readAsText(file);
     importFile.value = '';
 });
+
 document.querySelectorAll('.sort-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         const key = btn.dataset.key;
@@ -481,19 +453,16 @@ document.querySelectorAll('.sort-btn').forEach(btn => {
             btn.dataset.key.charAt(0).toUpperCase() +
             btn.dataset.key.slice(1);
         btn.textContent += sortAsc ? ' ↑' : ' ↓';
-        applyFilters();
+        useFilters();
     });
 });
 
-
-// ARIA STATUS ANNOUNCEMENT  thst updated the hidden live region with a message so screeen readers can announce feedback 
-export function announceStatus(message, mode = 'polite') {
+export function showStatus(message, mode = 'polite') {
     if (!statusEl) return;
     statusEl.setAttribute('aria-live', mode);
     statusEl.textContent = message;
 }
 
-
 loadSettingsUI();
-renderTasks();
+displayTasks();
 updateStats();

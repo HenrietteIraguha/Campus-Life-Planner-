@@ -78,7 +78,7 @@ export function validateDate(value) {
     return { valid: true, value: str };
 }
 
-// Validation of a tag string which has to contain only letters .
+
 
 export function validateTag(value) {
     if (!value) {
@@ -94,7 +94,7 @@ export function validateTag(value) {
     return{valid:true, value:value};
 }
 
-// Returns null if the input is empty or produces an invalid regex,
+
 
 export function compileRegex(input, flags = "i") {
     try {

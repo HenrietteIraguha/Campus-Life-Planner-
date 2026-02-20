@@ -19,7 +19,7 @@
 ## 🔗 Links
 
 - 🌐 **Live Demo:** *(add GitHub Pages link)*  
-- 📦 **Repository:** *(add repo link)*  
+- 📦 **Repository:** https://github.com/HenrietteIraguha/Campus-Life-Planner-
 - 🎥 **Demo Video:** https://youtu.be/mKFxnaMuHTU  
 
 ---
@@ -176,7 +176,7 @@ Settings → Import JSON → seed.json
 ## 🚀 Run Locally
 
 ```bash
-git clone https://github.com/HenrietteIraguha/your-repo-name.git
+git clone https://github.com/HenrietteIraguha/Campus-Life-Planner-
 cd your-repo-name
 python -m http.server 8000
 ```
