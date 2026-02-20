@@ -11,7 +11,7 @@ A clean, student-focused task planner built with vanilla HTML, CSS, and JavaScri
 
 📦 Repository: (add repo link)
 
-🎥 Demo Video: (add unlisted link)
+🎥 Demo Video: https://youtu.be/mKFxnaMuHTU
 
 🌟 Why Campus Life Planner?
 
